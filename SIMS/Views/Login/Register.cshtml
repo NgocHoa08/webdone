@@ -1,0 +1,356 @@
+﻿@model SIMS.Models.RegisterViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Register - SIMS BTec</title>
+    <link href="~/sims/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 30px 0;
+        }
+
+        .register-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border: none;
+        }
+
+            .card-header h3 {
+                font-weight: 700;
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+
+        .register-icon {
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+            .register-icon i {
+                font-size: 2.5rem;
+            }
+
+        .card-body {
+            padding: 40px;
+        }
+
+        .form-floating {
+            margin-bottom: 20px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e1e8ed;
+            padding: 12px 15px;
+            transition: all 0.3s;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            }
+
+        .btn-register {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+            .btn-register:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            }
+
+        .btn-back {
+            background: #6c757d;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            color: white;
+        }
+
+            .btn-back:hover {
+                background: #5a6268;
+                color: white;
+            }
+
+        .section-title {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .password-strength {
+            font-size: 12px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+            .login-link a {
+                color: #667eea;
+                font-weight: 600;
+                text-decoration: none;
+                transition: all 0.3s;
+            }
+
+                .login-link a:hover {
+                    color: #764ba2;
+                    text-decoration: underline;
+                }
+
+        footer {
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-7 col-md-9">
+                            <div class="card register-card shadow-lg mt-4">
+                                <div class="card-header">
+                                    <div class="register-icon">
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+                                    <h3>Create Account</h3>
+                                    <p class="mb-0" style="opacity: 0.9;">Join our Student Information Management System</p>
+                                </div>
+                                <div class="card-body">
+                                    <form method="post" asp-action="Register">
+                                        @Html.AntiForgeryToken()
+                                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                                        <!-- Account Information -->
+                                        <h5 class="section-title">
+                                            <i class="fas fa-id-badge me-2"></i>Account Information
+                                        </h5>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" asp-for="Username" id="username"
+                                                           type="text" placeholder="Username" autofocus />
+                                                    <label for="username">
+                                                        <i class="fas fa-user me-2"></i>Username
+                                                    </label>
+                                                    <span asp-validation-for="Username" class="text-danger small"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" asp-for="Email" id="email"
+                                                           type="email" placeholder="Email" />
+                                                    <label for="email">
+                                                        <i class="fas fa-envelope me-2"></i>Email
+                                                    </label>
+                                                    <span asp-validation-for="Email" class="text-danger small"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Personal Information -->
+                                        <h5 class="section-title mt-3">
+                                            <i class="fas fa-user-circle me-2"></i>Personal Information
+                                        </h5>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" asp-for="FullName" id="fullname"
+                                                           type="text" placeholder="Full Name" />
+                                                    <label for="fullname">
+                                                        <i class="fas fa-id-card me-2"></i>Full Name
+                                                    </label>
+                                                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" asp-for="Phone" id="phone"
+                                                           type="tel" placeholder="Phone Number" />
+                                                    <label for="phone">
+                                                        <i class="fas fa-phone me-2"></i>Phone Number
+                                                    </label>
+                                                    <span asp-validation-for="Phone" class="text-danger small"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Security -->
+                                        <h5 class="section-title mt-3">
+                                            <i class="fas fa-shield-alt me-2"></i>Security
+                                        </h5>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" asp-for="Password" id="password"
+                                                           type="password" placeholder="Password" />
+                                                    <label for="password">
+                                                        <i class="fas fa-lock me-2"></i>Password
+                                                    </label>
+                                                    <span asp-validation-for="Password" class="text-danger small"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" asp-for="ConfirmPassword" id="confirmPassword"
+                                                           type="password" placeholder="Confirm Password" />
+                                                    <label for="confirmPassword">
+                                                        <i class="fas fa-lock me-2"></i>Confirm Password
+                                                    </label>
+                                                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-check mb-4">
+                                            <input class="form-check-input" type="checkbox" id="agreeTerms" required />
+                                            <label class="form-check-label" for="agreeTerms">
+                                                I agree to the <a href="#" class="text-decoration-none">Terms and Conditions</a>
+                                            </label>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-2">
+                                                <button class="btn btn-register w-100" type="submit">
+                                                    <i class="fas fa-user-plus me-2"></i>Create Account
+                                                </button>
+                                            </div>
+                                            <div class="col-md-6 mb-2">
+                                                <a asp-action="Index" class="btn btn-back w-100">
+                                                    <i class="fas fa-arrow-left me-2"></i>Back to Login
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="login-link">
+                                        <p class="mb-0">
+                                            Already have an account?
+                                            <a asp-action="Index">
+                                                <i class="fas fa-sign-in-alt me-1"></i>Login here
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; BTec FPT 2025</div>
+                        <div>
+                            <a href="#" class="text-decoration-none">Privacy Policy</a>
+                            <span class="mx-1">&middot;</span>
+                            <a href="#" class="text-decoration-none">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="~/sims/js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        // Password strength indicator
+        $('#password').on('keyup', function() {
+            var password = $(this).val();
+            var strength = 0;
+
+            if (password.length >= 6) strength++;
+            if (password.length >= 10) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            var strengthText = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
+            var strengthColor = ['danger', 'warning', 'info', 'primary', 'success'];
+
+            $('.password-strength').remove();
+            if (password.length > 0 && strength > 0) {
+                $('#password').parent().append(
+                    '<div class="password-strength text-' + strengthColor[strength-1] + '">' +
+                    '<i class="fas fa-shield-alt me-1"></i>Strength: ' + strengthText[strength-1] +
+                    '</div>'
+                );
+            }
+        });
+
+        // Confirm password match indicator
+        $('#confirmPassword').on('keyup', function() {
+            var password = $('#password').val();
+            var confirm = $(this).val();
+
+            $('.password-match').remove();
+            if (confirm.length > 0) {
+                if (password === confirm) {
+                    $(this).parent().append(
+                        '<div class="password-match text-success small">' +
+                        '<i class="fas fa-check-circle me-1"></i>Passwords match' +
+                        '</div>'
+                    );
+                } else {
+                    $(this).parent().append(
+                        '<div class="password-match text-danger small">' +
+                        '<i class="fas fa-times-circle me-1"></i>Passwords do not match' +
+                        '</div>'
+                    );
+                }
+            }
+        });
+    </script>
+</body>
+</html>

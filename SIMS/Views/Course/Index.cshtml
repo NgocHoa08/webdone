@@ -1,0 +1,125 @@
+﻿@model IEnumerable<SIMS.Models.Course>
+@{
+    ViewData["Title"] = "List of Courses";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            <!-- Nút Back to Home (hiển thị cho mọi người) -->
+            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-secondary me-3">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <h2 class="mb-0">List of Courses</h2>
+        </div>
+
+        <div>
+            @if (User.IsInRole("Administrator"))
+            {
+                <a asp-action="Add" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Course
+                </a>
+            }
+        </div>
+    </div>
+
+    <!-- Thông báo thành công / lỗi -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Bảng danh sách khóa học -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Credits</th>
+                            <th>Instructor</th>
+                            <th>Status</th>
+                            <th>Created Date</th>
+                            <th style="width: 180px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var course in Model)
+                            {
+                                <tr>
+                                    <td><strong>@course.CourseCode</strong></td>
+                                    <td>@course.CourseName</td>
+                                    <td>@course.Credits</td>
+                                    <td>@course.Instructor</td>
+                                    <td>
+                                        @if (course.IsActive)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>@course.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="Details" asp-route-id="@course.CourseId"
+                                               class="btn btn-sm btn-info" title="Details">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            @if (User.IsInRole("Administrator") || User.Identity?.Name == "admin@sims.com")
+                                            {
+                                                <a asp-action="Edit" asp-route-id="@course.CourseId"
+                                                   class="btn btn-sm btn-warning" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a asp-action="Delete" asp-route-id="@course.CourseId"
+                                                   class="btn btn-sm btn-danger" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">
+                                    <i class="fas fa-inbox fa-3x mb-3"></i><br>
+                                    No courses found
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Tự động ẩn alert sau 3 giây
+        setTimeout(function () {
+            $('.alert').fadeOut('slow');
+        }, 3000);
+    </script>
+}

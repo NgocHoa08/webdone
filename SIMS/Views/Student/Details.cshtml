@@ -1,0 +1,200 @@
+﻿@model SIMS.Models.Student
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="fas fa-user-graduate"></i> Student Details</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Basic Information -->
+                    <h5 class="border-bottom pb-2 mb-3">Basic Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-5">Student Code:</dt>
+                                <dd class="col-sm-7"><strong class="text-primary">@Model.StudentCode</strong></dd>
+
+                                <dt class="col-sm-5">Full Name:</dt>
+                                <dd class="col-sm-7"><strong>@Model.FullName</strong></dd>
+
+                                <dt class="col-sm-5">Email:</dt>
+                                <dd class="col-sm-7">
+                                    <i class="far fa-envelope"></i> @Model.Email
+                                </dd>
+
+                                <dt class="col-sm-5">Phone:</dt>
+                                <dd class="col-sm-7">
+                                    @if (!string.IsNullOrEmpty(Model.Phone))
+                                    {
+                                        <i class="fas fa-phone"></i> @Model.Phone
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not provided</span>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-5">Date of Birth:</dt>
+                                <dd class="col-sm-7">
+                                    @if (Model.DateOfBirth.HasValue)
+{
+                                        var age = DateTime.Now.Year - Model.DateOfBirth.Value.Year;
+                                        if (DateTime.Now < Model.DateOfBirth.Value.AddYears(age)) { age--; }
+
+                                        <i class="far fa-calendar"></i> @Model.DateOfBirth.Value.ToString("dd/MM/yyyy")
+                                        <small class="text-muted">(@age years old)</small>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not provided</span>
+                                    }
+
+                                </dd>
+
+                                <dt class="col-sm-5">Gender:</dt>
+                                <dd class="col-sm-7">
+                                    @if (!string.IsNullOrEmpty(Model.Gender))
+                                    {
+                                        @Model.Gender
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not specified</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-5">Address:</dt>
+                                <dd class="col-sm-7">
+                                    @if (!string.IsNullOrEmpty(Model.Address))
+                                    {
+                                        <i class="fas fa-map-marker-alt"></i> @Model.Address
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not provided</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-5">Status:</dt>
+                                <dd class="col-sm-7">
+                                    @if (Model.IsActive)
+                                    {
+                                        <span class="badge bg-success"><i class="fas fa-check-circle"></i> Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary"><i class="fas fa-times-circle"></i> Inactive</span>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <!-- Academic Information -->
+                    <h5 class="border-bottom pb-2 mb-3 mt-4">Academic Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-5">Major:</dt>
+                                <dd class="col-sm-7">
+                                    @if (!string.IsNullOrEmpty(Model.Major))
+                                    {
+                                        <i class="fas fa-graduation-cap"></i> <strong>@Model.Major</strong>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not assigned</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-5">Enrollment Year:</dt>
+                                <dd class="col-sm-7">
+                                    @if (Model.EnrollmentYear.HasValue)
+                                    {
+                                        <span class="badge bg-primary">@Model.EnrollmentYear</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not provided</span>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-5">GPA:</dt>
+                                <dd class="col-sm-7">
+                                    @if (Model.GPA.HasValue)
+                                    {
+                                        var gpa = Model.GPA.Value;
+                                        var gpaClass =
+                                            gpa >= 3.5m ? "success" :
+                                            gpa >= 2.5m ? "info" :
+                                            gpa >= 2.0m ? "warning" : "danger";
+
+                                        <span class="badge bg-@gpaClass fs-6">@gpa.ToString("F2")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not calculated</span>
+                                    }
+
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    @if (!string.IsNullOrEmpty(Model.Notes))
+                    {
+                        <h5 class="border-bottom pb-2 mb-3 mt-4">Notes</h5>
+                        <div class="alert alert-light">
+                            <p class="mb-0">@Model.Notes</p>
+                        </div>
+                    }
+
+                    <!-- System Information -->
+                    <h5 class="border-bottom pb-2 mb-3 mt-4">System Information</h5>
+                    <dl class="row">
+                        <dt class="col-sm-3">Created Date:</dt>
+                        <dd class="col-sm-9">
+                            <i class="far fa-calendar-plus"></i> @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm")
+                        </dd>
+
+                        @if (Model.UpdatedDate.HasValue)
+                        {
+                            <dt class="col-sm-3">Last Updated:</dt>
+                            <dd class="col-sm-9">
+                                <i class="far fa-calendar-check"></i> @Model.UpdatedDate.Value.ToString("dd/MM/yyyy HH:mm")
+                            </dd>
+                        }
+                    </dl>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@Model.StudentId" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@Model.StudentId" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
